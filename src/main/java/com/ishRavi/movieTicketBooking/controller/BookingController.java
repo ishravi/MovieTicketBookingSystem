@@ -1,5 +1,6 @@
 package com.ishRavi.movieTicketBooking.controller;
 
+import com.ishRavi.movieTicketBooking.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,9 +52,9 @@ public class BookingController {
 
 			return ResponseEntity.created(location).build();
 		}catch(SeatTemporaryUnavailableException ex){
-			return ResponseEntity.notFound().build();
+			throw new SeatTemporaryUnavailableException("Selected Seats are locked");
 		}catch(SeatPermanentlyUnavailableException ex){
-			return ResponseEntity.notFound().build();
+			throw new SeatPermanentlyUnavailableException("Selected Seats are booked");
 		}
 
 
